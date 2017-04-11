@@ -1,9 +1,12 @@
 package rsu.siriwimon.pakdeeporn.alertbusstop;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 /**
  * Created by masterUNG on 4/11/2017 AD.
@@ -13,6 +16,9 @@ public class MyAdapter extends BaseAdapter{
 
     private Context context;
     private String[] busStopStrings, statusStrings;
+    private TextView textView;
+    private ImageView imageView;
+    private int[] ints = new int[]{R.mipmap.ic_bus, R.mipmap.ic_destination};
 
     public MyAdapter(Context context,
                      String[] busStopStrings,
@@ -24,7 +30,7 @@ public class MyAdapter extends BaseAdapter{
 
     @Override
     public int getCount() {
-        return 0;
+        return busStopStrings.length;
     }
 
     @Override
@@ -39,6 +45,18 @@ public class MyAdapter extends BaseAdapter{
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        return null;
+
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view1 = layoutInflater.inflate(R.layout.my_listview, viewGroup, false);
+
+        //Initial View
+        textView = (TextView) view1.findViewById(R.id.txtNameBus);
+        imageView = (ImageView) view1.findViewById(R.id.imvIcon);
+
+        //Show View
+        textView.setText(busStopStrings[i]);
+        imageView.setImageResource(ints[Integer.parseInt(statusStrings[i])]);
+
+        return view1;
     }
 }   // Main Class

@@ -17,7 +17,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -325,17 +324,23 @@ public class MainActivity extends AppCompatActivity {
             int intCursor = cursor.getCount();
             Log.d("27febV2", "intCursor ==> " + intCursor);
 
+            String[] idStrings = new String[intCursor];
             String[] nameStrings = new String[intCursor];
+            String[] statusStrings = new String[intCursor];
             for (int i = 0; i < intCursor; i++) {
 
+                idStrings[i] = cursor.getString(0);
                 nameStrings[i] = cursor.getString(1);
+                statusStrings[i] = cursor.getString(5);
                 cursor.moveToNext();
 
             }   // for
 
-            ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(MainActivity.this,
-                    android.R.layout.simple_list_item_1, nameStrings);
-            listView.setAdapter(stringArrayAdapter);
+            //Show ListView
+            MyAdapter myAdapter = new MyAdapter(MainActivity.this,
+                    nameStrings, statusStrings);
+            listView.setAdapter(myAdapter);
+
 
             cursor.close();
 
