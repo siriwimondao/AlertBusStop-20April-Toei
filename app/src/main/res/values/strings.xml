@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Alert Bus Stop</string>
+    <string name="title_activity_add_bus_stop">Map</string>
+
+    <string name="title_have_space">มีช่องว่าง</string>
+    <string name="massage_have_space">กรุณากรอกทุกช่องค่ะ</string>
+    <string name="title_record_sound">ยังไม่ได้บันทึกเสียง</string>
+    <string name="massage_record_sound">กรุณากดปุ่มบันทึกเสียง</string>
+    <string name="title_mark">ยังไม่ได้กำหนดต่ำแหน่ง</string>
+    <string name="massage_mark">กรุณากำหนด ตำแหน่งของ ป้ายรถเมล์ โดยการคลิก ตำแหน่งบนแผนที่</string>
+</resources>
