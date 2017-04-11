@@ -14,12 +14,25 @@ public class MyAlert {
     private int anInt;
     private  String titString, messString;
 
-    public MyAlert(Context context, int anInt, String titString, String messString) {
+    public MyAlert(Context context,
+                   int anInt,
+                   String titString,
+                   String messString) {
         this.context = context;
         this.anInt = anInt;
         this.titString = titString;
         this.messString = messString;
     } // method หลัก
+
+    public boolean confirmChangeStatus() {
+
+        final boolean[] result = {false}; // Not Change
+
+
+        return result[0];
+    }
+
+
 
     public void myDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
