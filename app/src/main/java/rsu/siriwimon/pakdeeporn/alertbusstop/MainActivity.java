@@ -1,7 +1,9 @@
 package rsu.siriwimon.pakdeeporn.alertbusstop;
 
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -17,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -315,6 +318,8 @@ public class MainActivity extends AppCompatActivity {
 
         try {
 
+            final String tag = "11AprilV2";
+
             //Read All SQLite
             SQLiteDatabase sqLiteDatabase = openOrCreateDatabase(MyOpenHelper.database_name,
                     MODE_PRIVATE, null);
@@ -325,7 +330,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("27febV2", "intCursor ==> " + intCursor);
 
             String[] idStrings = new String[intCursor];
-            String[] nameStrings = new String[intCursor];
+            final String[] nameStrings = new String[intCursor];
             String[] statusStrings = new String[intCursor];
             for (int i = 0; i < intCursor; i++) {
 
@@ -340,6 +345,33 @@ public class MainActivity extends AppCompatActivity {
             MyAdapter myAdapter = new MyAdapter(MainActivity.this,
                     nameStrings, statusStrings);
             listView.setAdapter(myAdapter);
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setCancelable(false);
+                    builder.setIcon(R.mipmap.ic_bus);
+                    builder.setTitle("โปรยืนยัน");
+                    builder.setMessage("คุณต้องการเปลียน ปลายทางไปที่ " + nameStrings[i]);
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    builder.show();
+
+                }   // onItem
+            });
 
 
             cursor.close();
