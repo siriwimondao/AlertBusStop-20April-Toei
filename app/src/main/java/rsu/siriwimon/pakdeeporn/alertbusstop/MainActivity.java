@@ -136,11 +136,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Uri uri;
 
         if (status) {
-            uri = Uri.parse("android.resource://" +
-                    MainActivity.this.getPackageName() +
-                    "/" +
-                    R.raw.bells);
+            // Destination
+
+            if (notificationABoolean) {
+                uri = Uri.parse("android.resource://" +
+                        MainActivity.this.getPackageName() +
+                        "/" +
+                        R.raw.bells);
+            } else {
+                uri = Uri.parse("android.resource://" +
+                        MainActivity.this.getPackageName() +
+                        "/" +
+                        R.raw.add_bus1);
+            }
+
         } else {
+            // BusStop
             uri = Uri.parse("file:" + strSound);
         }
 
@@ -255,15 +266,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     //ค่า aDouble ค่าของ seriousDistance เพิ่มไป 10 เมตร
                     if (notificationABoolean) {
                         aDouble = seriousDistance[indexDistance[i]] + 10;
-                        notificationABoolean = false;
+
                         anInt = indexDistance[i];
                         myNotification(cursor.getString(2));
+                        notificationABoolean = false;
 
                     }
 
 
                 } else if (distanceDoubles[i] <= (aDouble)) {
+                    if (!notificationABoolean) {
+                        myNotification(cursor.getString(2));
+                    }
                     notificationABoolean = true;
+
                 }
 
 
