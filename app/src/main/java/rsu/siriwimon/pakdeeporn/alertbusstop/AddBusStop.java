@@ -27,7 +27,7 @@ public class AddBusStop extends FragmentActivity implements OnMapReadyCallback {
     private EditText editText;
     private Button button;
     private String nameBusStopString, pathAudioString;
-    private ImageView recodImageView, playimImageView;
+    private ImageView recodImageView, playimImageView, backImageView;
     private boolean aBoolean = true; // nonrecord sound
     private Uri uri;
     private double laStartADouble = 13.964987;
@@ -36,6 +36,9 @@ public class AddBusStop extends FragmentActivity implements OnMapReadyCallback {
     private boolean locationABoolean = true;
     private CheckBox checkBox;
     private int checkboxAnInt = 0;
+    private boolean editABoolean = false;
+    private String idString;
+    private String tag = "12AprilV2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,19 @@ public class AddBusStop extends FragmentActivity implements OnMapReadyCallback {
 
         // Bind Widget
         bindWidget();
+
+        //From EditBusStop
+        fromEditBusStop();
+
+        //Back Controller
+        backImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+
 
         //record controller
         recodImageView.setOnClickListener(new View.OnClickListener() {
@@ -116,12 +132,33 @@ public class AddBusStop extends FragmentActivity implements OnMapReadyCallback {
         mapFragment.getMapAsync(this);
     } // Main Method
 
+    private void fromEditBusStop() {
+
+        try {
+
+            editABoolean = getIntent().getBooleanExtra("Edit", false);
+            if (editABoolean) {
+                idString = getIntent().getStringExtra("id");
+                nameBusStopString = getIntent().getStringExtra("Name");
+            }
+
+            Log.d(tag, "id ==> " + idString);
+            editText.setText(nameBusStopString);
+
+
+        } catch (Exception e) {
+            Log.d(tag, "e fromEdit ==> " + e.toString());
+        }
+
+    }   // fromEditBusStop
+
     private void bindWidget() {
         editText = (EditText) findViewById(R.id.editText);
         button = (Button) findViewById(R.id.button2);
         recodImageView = (ImageView) findViewById(R.id.imageView);
         playimImageView = (ImageView) findViewById(R.id.imageView2);
         checkBox = (CheckBox) findViewById(R.id.checkBox1);
+        backImageView = (ImageView) findViewById(R.id.imvBack);
     }
 
     private void updateValuetoSQlite() {
