@@ -329,7 +329,7 @@ public class MainActivity extends AppCompatActivity {
             int intCursor = cursor.getCount();
             Log.d("27febV2", "intCursor ==> " + intCursor);
 
-            String[] idStrings = new String[intCursor];
+            final String[] idStrings = new String[intCursor];
             final String[] nameStrings = new String[intCursor];
             String[] statusStrings = new String[intCursor];
             for (int i = 0; i < intCursor; i++) {
@@ -350,6 +350,8 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+                    final String strID = idStrings[i];
+
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setCancelable(false);
                     builder.setIcon(R.mipmap.ic_bus);
@@ -364,7 +366,7 @@ public class MainActivity extends AppCompatActivity {
                     builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-
+                            editDestination(strID);
                             dialogInterface.dismiss();
                         }
                     });
@@ -383,6 +385,22 @@ public class MainActivity extends AppCompatActivity {
 
 
     }   // createListView
+
+    private void editDestination(String strID) {
+
+        try {
+
+            SQLiteDatabase sqLiteDatabase = openOrCreateDatabase(MyOpenHelper.database_name,
+                    MODE_PRIVATE, null);
+            sqLiteDatabase.execSQL("UPDATE busTABLE SET Destination = 1 WHERE _id=" + strID);
+
+            createListView();
+
+        } catch (Exception e) {
+            Log.d("11AprilV2", "e edti ==> " + e.toString());
+        }
+
+    }   // editDestination
 
     private void mySoundEfect(int intSound) {
         MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), intSound);
