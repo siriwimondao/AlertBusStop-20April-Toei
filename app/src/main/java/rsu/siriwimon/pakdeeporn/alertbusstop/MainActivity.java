@@ -21,11 +21,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     // Explicit
     private ListView listView;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private Criteria criteria;
     private Double userLatADouble = 13.964987, userLngADouble = 100.585154, aDouble = 0.0;
     private boolean aBoolean = true, notificationABoolean = true;
+    private ImageView editImageView, deleteImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +58,20 @@ public class MainActivity extends AppCompatActivity {
         // Long Click Button Controller
         longClickButtonController();
 
+        //Image Controller
+        imageController();
+
+
         //My Loop
         myLoop();
 
 
     }// Main Medthod
+
+    private void imageController() {
+        editImageView.setOnClickListener(MainActivity.this);
+        deleteImageView.setOnClickListener(MainActivity.this);
+    }
 
     private void longClickButtonController() {
         button.setOnLongClickListener(new View.OnLongClickListener() {
@@ -88,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
     private void bindWidget() {
         listView = (ListView) findViewById(R.id.livBusStop);
         button = (Button) findViewById(R.id.button);
+        editImageView = (ImageView) findViewById(R.id.imvEdit);
+        deleteImageView = (ImageView) findViewById(R.id.imvDelete);
     }
 
     private void mySetUp() {
@@ -413,4 +426,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     } // mySoundEfect
+
+    @Override
+    public void onClick(View view) {
+
+        //For Edit
+        if (view == editImageView) {
+            startActivity(new Intent(MainActivity.this, EditBusStop.class));
+        }
+
+        //For Delete
+        if (view == deleteImageView) {
+            startActivity(new Intent(MainActivity.this, DeleteBusStop.class));
+        }
+
+    }   // onClick
+
 }// Main class
