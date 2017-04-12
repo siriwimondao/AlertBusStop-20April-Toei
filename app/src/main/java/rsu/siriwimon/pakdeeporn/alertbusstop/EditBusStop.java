@@ -33,6 +33,12 @@ public class EditBusStop extends AppCompatActivity implements View.OnClickListen
 
     }   // Main Method
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        createListView();
+    }
+
     private void createListView() {
 
         try {
