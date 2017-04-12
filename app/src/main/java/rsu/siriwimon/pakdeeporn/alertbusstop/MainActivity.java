@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Double userLatADouble = 13.964987, userLngADouble = 100.585154, aDouble = 0.0;
     private boolean aBoolean = true, notificationABoolean = true;
     private ImageView editImageView, deleteImageView;
+    private int anInt; // ค่า index ของระยะ ที่ใช้ 0==> 20, 1==>300
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +115,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void myNotification(String strSound) {
 
+        Log.d("11AprilV1", "aInt ==> " + anInt);
+        boolean status = false;
+        if (anInt == 1) {
+            status = true;
+        }
+
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         builder.setSmallIcon(R.drawable.doremon48);
@@ -124,25 +131,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         builder.setAutoCancel(true);
 
         //Set Sound
-//
-//        Uri soundUri = Uri.parse("android.resource://" +
-//                MainActivity.this.getPackageName() +
-//                "/" + R.raw.bells);
-
-//       Uri soundUri = Uri.parse(Environment.getExternalStorageDirectory()+"/storage/emulated/0/recording983304787.3gp");
-
-        Uri soundUri = Uri.parse("file:" + strSound);
 
 
-        builder.setSound(soundUri);
+        Uri uri;
 
-        android.app.Notification notification = builder.build();
+        if (status) {
+            uri = Uri.parse("android.resource://" +
+                    MainActivity.this.getPackageName() +
+                    "/" +
+                    R.raw.bells);
+        } else {
+            uri = Uri.parse("file:" + strSound);
+        }
 
-//            notification.flags |= Notification.DEFAULT_LIGHTS
-//                    | Notification.FLAG_AUTO_CANCEL
-//                    | Notification.FLAG_ONLY_ALERT_ONCE;
+        builder.setSound(uri);
+        Notification notification = builder.build();
 
-        notification.flags |= Notification.FLAG_AUTO_CANCEL;
+        if (status) {
+
+            notification.flags |= Notification.DEFAULT_LIGHTS
+                    | Notification.FLAG_AUTO_CANCEL
+                    | Notification.FLAG_ONLY_ALERT_ONCE;
+        } else {
+
+            notification.flags |= Notification.FLAG_AUTO_CANCEL;
+        }
+
+
+
+
 
         NotificationManager notificationManager = (NotificationManager)
                 getSystemService(NOTIFICATION_SERVICE);
@@ -226,6 +243,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d("27febV4", "index ==> " + indexDistance[i]);
                 Log.d("27febV4", "ระยะคำนวน ==> " + seriousDistance[indexDistance[i]]);
                 Log.d("27febV4", "boolean Notification ==> " + notificationABoolean);
+                Log.d("11AprilV1", "boolean Notification ==> " + notificationABoolean);
                 Log.d("27febV4", "aDouble ==> " + aDouble);
 
                 //Check Distance
@@ -234,15 +252,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
                     // ดูว่าเป็นการเข้าครั้งแรกปะ
+                    //ค่า aDouble ค่าของ seriousDistance เพิ่มไป 10 เมตร
                     if (notificationABoolean) {
-                        aDouble = seriousDistance[indexDistance[i]];
+                        aDouble = seriousDistance[indexDistance[i]] + 10;
                         notificationABoolean = false;
+                        anInt = indexDistance[i];
                         myNotification(cursor.getString(2));
 
                     }
 
 
-                } else if (distanceDoubles[i] <= (aDouble + 10.0)) {
+                } else if (distanceDoubles[i] <= (aDouble)) {
                     notificationABoolean = true;
                 }
 
