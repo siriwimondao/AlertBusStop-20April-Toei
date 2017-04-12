@@ -94,6 +94,7 @@ public class DeleteBusStop extends AppCompatActivity implements View.OnClickList
 
             });
 
+            cursor.close();
 
         } catch (Exception e) {
             Log.d(tag, "e createListView ==> " + e.toString());

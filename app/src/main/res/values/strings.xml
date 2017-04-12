@@ -10,4 +10,5 @@
     <string name="massage_mark">กรุณากำหนด ตำแหน่งของ ป้ายรถเมล์ โดยการคลิก ตำแหน่งบนแผนที่</string>
     <string name="delete">ลบป้ายโดยสาร</string>
     <string name="edit">แก้ไขป้ายโดยสาร</string>
+    <string name="add">เพิ่มข้อมูล</string>
 </resources>

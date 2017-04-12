@@ -2,6 +2,7 @@ package rsu.siriwimon.pakdeeporn.alertbusstop;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,7 +28,7 @@ public class AddBusStop extends FragmentActivity implements OnMapReadyCallback {
     private EditText editText;
     private Button button;
     private String nameBusStopString, pathAudioString;
-    private ImageView recodImageView, playimImageView;
+    private ImageView recodImageView, playimImageView, backImageView;
     private boolean aBoolean = true; // nonrecord sound
     private Uri uri;
     private double laStartADouble = 13.964987;
@@ -36,6 +37,9 @@ public class AddBusStop extends FragmentActivity implements OnMapReadyCallback {
     private boolean locationABoolean = true;
     private CheckBox checkBox;
     private int checkboxAnInt = 0;
+    private boolean editABoolean = false;
+    private String idString;
+    private String tag = "12AprilV2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,16 +49,53 @@ public class AddBusStop extends FragmentActivity implements OnMapReadyCallback {
         // Bind Widget
         bindWidget();
 
+        //From EditBusStop
+        fromEditBusStop();
+
+        //Back Controller
+        backController();
+
         //record controller
-        recodImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
-                startActivityForResult(intent, 0); //ใส่เลข 0 เป็น result
-            } // onclick บันทึกเสียง
-        });
+        recordController();
 
         // button controller ปุ่มคลิ๊ก
+        buttonController();
+
+        //play controller
+        playController();
+
+        // Create Fragment Map
+        createFragmentMap();
+
+    } // Main Method
+
+    private void createFragmentMap() {
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+    }
+
+    private void playController() {
+        playimImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //check record
+                if (aBoolean) {
+                    // non record ไม่มีการบันทึกเสียงให้แจ้ง
+                    MyAlert myAlert = new MyAlert(AddBusStop.this, R.drawable.nobita48,
+                            getResources().getString(R.string.title_record_sound),
+                            getResources().getString(R.string.massage_record_sound));
+                    myAlert.myDialog();
+                } else {
+                    // record ok ให้เสียงร้องเล่นเสียง
+                    MediaPlayer mediaPlayer = MediaPlayer.create(AddBusStop.this, uri);
+                    mediaPlayer.start();
+                }
+            } // onclick
+        });
+    }
+
+    private void buttonController() {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,36 +126,68 @@ public class AddBusStop extends FragmentActivity implements OnMapReadyCallback {
                     myAlert.myDialog();
 
                 } else {
+
+                    //Delete Old Data
+                    deleteOldData();
+
                     //update value to SQlite
                     updateValuetoSQlite();
 
                 }  // if
             } // onClick
         });
-        //play controller
-        playimImageView.setOnClickListener(new View.OnClickListener() {
+    }
+
+    private void deleteOldData() {
+        if (editABoolean) {
+
+            SQLiteDatabase sqLiteDatabase = openOrCreateDatabase(MyOpenHelper.database_name,
+                    MODE_PRIVATE, null);
+            Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM busTABLE", null);
+            cursor.moveToFirst();
+            sqLiteDatabase.delete("busTABLE", "_id" + "=" + Integer.parseInt(idString), null);
+
+        }
+    }
+
+    private void recordController() {
+        recodImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //check record
-                if (aBoolean) {
-                    // non record ไม่มีการบันทึกเสียงให้แจ้ง
-                    MyAlert myAlert = new MyAlert(AddBusStop.this, R.drawable.nobita48,
-                            getResources().getString(R.string.title_record_sound),
-                            getResources().getString(R.string.massage_record_sound));
-                    myAlert.myDialog();
-                } else {
-                    // record ok ให้เสียงร้องเล่นเสียง
-                    MediaPlayer mediaPlayer = MediaPlayer.create(AddBusStop.this, uri);
-                    mediaPlayer.start();
-                }
-            } // onclick
+                Intent intent = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
+                startActivityForResult(intent, 0); //ใส่เลข 0 เป็น result
+            } // onclick บันทึกเสียง
         });
+    }
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-    } // Main Method
+    private void backController() {
+        backImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
+    private void fromEditBusStop() {
+
+        try {
+
+            editABoolean = getIntent().getBooleanExtra("Edit", false);
+            if (editABoolean) {
+                idString = getIntent().getStringExtra("id");
+                nameBusStopString = getIntent().getStringExtra("Name");
+            }
+
+            Log.d(tag, "id ==> " + idString);
+            editText.setText(nameBusStopString);
+
+
+        } catch (Exception e) {
+            Log.d(tag, "e fromEdit ==> " + e.toString());
+        }
+
+    }   // fromEditBusStop
 
     private void bindWidget() {
         editText = (EditText) findViewById(R.id.editText);
@@ -122,6 +195,7 @@ public class AddBusStop extends FragmentActivity implements OnMapReadyCallback {
         recodImageView = (ImageView) findViewById(R.id.imageView);
         playimImageView = (ImageView) findViewById(R.id.imageView2);
         checkBox = (CheckBox) findViewById(R.id.checkBox1);
+        backImageView = (ImageView) findViewById(R.id.imvBack);
     }
 
     private void updateValuetoSQlite() {
