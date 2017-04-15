@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:background="@color/colorPrimary"
-        android:paddingTop="@dimen/padding1"
+        android:paddingTop="@dimen/padding2"
         android:paddingBottom="@dimen/padding2"
         android:paddingLeft="@dimen/padding2"
         android:orientation="horizontal"

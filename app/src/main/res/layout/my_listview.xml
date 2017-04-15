@@ -14,9 +14,9 @@
 
     <ImageView
         android:id="@+id/imvIcon"
-        android:scaleType="fitEnd"
-        android:src="@mipmap/ic_bus"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:scaleType="fitEnd"
+        android:src="@mipmap/ic_notification2" />
 
 </LinearLayout>

@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        builder.setSmallIcon(R.drawable.doremon48);
+        builder.setSmallIcon(R.mipmap.ic_alert);
         builder.setTicker("Help Me Please Arrive ");
         builder.setWhen(System.currentTimeMillis());
         builder.setContentTitle("Alert");
@@ -219,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 public void run() {
                     myLoop();
                 }
-            }, 5000);
+            }, 1000);
         }
 
 
@@ -403,7 +403,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setCancelable(false);
-                    builder.setIcon(R.mipmap.ic_bus);
+                    builder.setIcon(R.mipmap.ic_notification2);
                     builder.setTitle("โปรยืนยัน");
                     builder.setMessage("คุณต้องการเปลียน ปลายทางไปที่ " + nameStrings[i]);
                     builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

@@ -43,15 +43,15 @@ public class DeleteBusStop extends AppCompatActivity implements View.OnClickList
             Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM busTABLE", null);
             cursor.moveToFirst();
 
-            String[] nameBusStopStrings = new String[cursor.getCount()];
-            String[] statusStrings = new String[cursor.getCount()];
+            String[] nameBusStopStrings = new String[cursor.getCount()]; //จองหน่วยความจำ
+            String[] statusStrings = new String[cursor.getCount()]; // นับ
             final String[] idStrings = new String[cursor.getCount()];
 
             for (int i=0;i<cursor.getCount();i++) {
                 idStrings[i] = cursor.getString(0);
                 nameBusStopStrings[i] = cursor.getString(1);
                 statusStrings[i] = cursor.getString(5);
-                cursor.moveToNext();
+                cursor.moveToNext(); //ขยับไปเรื่อยๆ
             }   // for
 
             //Create ListView
@@ -62,7 +62,7 @@ public class DeleteBusStop extends AppCompatActivity implements View.OnClickList
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    Log.d(tag, "id ==> " + idStrings[i]);
+                    Log.d(tag, "id ==> " + idStrings[i]); //เช็คค่าid
                     confirmDelete(Integer.parseInt(idStrings[i]));
                 }
 
@@ -70,7 +70,7 @@ public class DeleteBusStop extends AppCompatActivity implements View.OnClickList
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(DeleteBusStop.this);
                     builder.setCancelable(false);
-                    builder.setIcon(R.mipmap.ic_bus);
+                    builder.setIcon(R.mipmap.ic_delete);//เปลี่ยนicได้
                     builder.setTitle("Confirm Delete");
                     builder.setMessage("Are You Sure ?");
                     builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
