@@ -71,8 +71,8 @@ public class DeleteBusStop extends AppCompatActivity implements View.OnClickList
                     AlertDialog.Builder builder = new AlertDialog.Builder(DeleteBusStop.this);
                     builder.setCancelable(false);
                     builder.setIcon(R.mipmap.ic_delete);//เปลี่ยนicได้
-                    builder.setTitle("Confirm Delete");
-                    builder.setMessage("Are You Sure ?");
+                    builder.setTitle("ลบ");
+                    builder.setMessage("ลบป้ายรถโดยสารประจำทาง");
                     builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {

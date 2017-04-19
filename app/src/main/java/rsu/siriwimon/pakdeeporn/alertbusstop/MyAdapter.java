@@ -18,7 +18,7 @@ public class MyAdapter extends BaseAdapter{
     private String[] busStopStrings, statusStrings;
     private TextView textView;
     private ImageView imageView;
-    private int[] ints = new int[]{R.mipmap.ic_notification2, R.mipmap.ic_nontification1};
+    private int[] ints = new int[]{R.mipmap.ic_nontification1, R.mipmap.ic_notification2};
 
     public MyAdapter(Context context,
                      String[] busStopStrings,

@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonController();
 
         // Long Click Button Controller
-        longClickButtonController();
+        //longClickButtonController();
 
         //Image Controller
         imageController();
@@ -74,25 +74,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         deleteImageView.setOnClickListener(MainActivity.this);
     }
 
-    private void longClickButtonController() {
-        button.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                Log.d("31octV1", "You Click Long"); //ควบคุมการคลิก
-
-                startActivity(new Intent(MainActivity.this, AddBusStop.class));//เคลื่อนย้ายการทำงาน
-
-                return true;
-
-            } // onLongClick
-        });
-    }
-
     private void buttonController() {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mySoundEfect(R.raw.add_bus1);
+                Log.d("31octV1", "You Click Long"); //ควบคุมการคลิก
+
+                startActivity(new Intent(MainActivity.this, AddBusStop.class));//เคลื่อนย้ายการทำงาน
+
+                //mySoundEfect(R.raw.add_bus1);
             }// onClick
         });
     }
@@ -404,8 +394,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setCancelable(false);
                     builder.setIcon(R.mipmap.ic_notification2);
-                    builder.setTitle("โปรยืนยัน");
-                    builder.setMessage("คุณต้องการเปลียน ปลายทางไปที่ " + nameStrings[i]);
+                    builder.setTitle("โปรดยืนยัน");
+                    builder.setMessage("คุณต้องการเปลียนปลายทางไปที่ " + nameStrings[i]);
                     builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {

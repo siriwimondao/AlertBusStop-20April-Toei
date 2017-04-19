@@ -10,10 +10,14 @@
 
     <Button
         android:text="Add Bus Stop"
+        android:textStyle="bold"
+        android:textSize="20sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/button"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        />
 
     <ListView
         android:layout_below="@+id/relTop"

@@ -6,9 +6,9 @@
     <string name="massage_have_space">กรุณากรอกทุกช่องค่ะ</string>
     <string name="title_record_sound">ยังไม่ได้บันทึกเสียง</string>
     <string name="massage_record_sound">กรุณากดปุ่มบันทึกเสียง</string>
-    <string name="title_mark">ยังไม่ได้กำหนดต่ำแหน่ง</string>
-    <string name="massage_mark">กรุณากำหนด ตำแหน่งของ ป้ายรถเมล์ โดยการคลิก ตำแหน่งบนแผนที่</string>
-    <string name="delete">ลบป้ายโดยสาร</string>
-    <string name="edit">แก้ไขป้ายโดยสาร</string>
+    <string name="title_mark">ยังไม่ได้กำหนดตำแหน่ง</string>
+    <string name="massage_mark">กรุณากำหนดตำแหน่งของป้ายรถโดยสารประจำทาง โดยการคลิกตำแหน่งบนแผนที่</string>
+    <string name="delete">ลบป้ายโดยสารประจำทาง</string>
+    <string name="edit">แก้ไขป้ายโดยสารประจำทาง</string>
     <string name="add">เพิ่มข้อมูล</string>
 </resources>
