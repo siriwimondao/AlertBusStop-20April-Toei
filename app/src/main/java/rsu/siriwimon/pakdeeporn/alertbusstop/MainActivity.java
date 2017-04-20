@@ -391,25 +391,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     final String strID = idStrings[i];
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                    builder.setCancelable(false);
-                    builder.setIcon(R.mipmap.ic_notification2);
-                    builder.setTitle("โปรดยืนยัน");
-                    builder.setMessage("คุณต้องการเปลียนปลายทางไปที่ " + nameStrings[i]);
-                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                        }
-                    });
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            editDestination(strID);
-                            dialogInterface.dismiss();
-                        }
-                    });
-                    builder.show();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        builder.setCancelable(false);
+                        builder.setIcon(R.mipmap.ic_notification2);
+                        builder.setTitle("โปรดยืนยัน");
+                        builder.setMessage("คุณต้องการเปลียนปลายทางไปที่ " + nameStrings[i]);
+                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        });
+                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                editDestination(strID);
+                                dialogInterface.dismiss();
+                            }
+                        });
+                        builder.show();
+
 
                 }   // onItem
             });
