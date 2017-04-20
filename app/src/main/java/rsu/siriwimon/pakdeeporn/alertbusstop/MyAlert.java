@@ -37,6 +37,7 @@ public class MyAlert {
     public void myDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setCancelable(false);
+        builder.setIcon(anInt);
         builder.setTitle(titString);
         builder.setMessage(messString);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {

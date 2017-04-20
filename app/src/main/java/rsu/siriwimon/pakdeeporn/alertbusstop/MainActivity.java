@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 uri = Uri.parse("android.resource://" +
                         MainActivity.this.getPackageName() +
                         "/" +
-                        R.raw.add_bus1);
+                        R.raw.past_des);
             }
 
         } else {

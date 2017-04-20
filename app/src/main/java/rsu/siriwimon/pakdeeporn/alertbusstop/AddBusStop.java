@@ -82,7 +82,7 @@ public class AddBusStop extends FragmentActivity implements OnMapReadyCallback {
                 //check record
                 if (aBoolean) {
                     // non record ไม่มีการบันทึกเสียงให้แจ้ง
-                    MyAlert myAlert = new MyAlert(AddBusStop.this, R.drawable.nobita48,
+                    MyAlert myAlert = new MyAlert(AddBusStop.this, R.mipmap.ic_report_problem,
                             getResources().getString(R.string.title_record_sound),
                             getResources().getString(R.string.massage_record_sound));
                     myAlert.myDialog();
@@ -107,20 +107,20 @@ public class AddBusStop extends FragmentActivity implements OnMapReadyCallback {
                 if (nameBusStopString.equals("")) {
                     // Have Space
                     MyAlert myAlert = new MyAlert(AddBusStop.this,
-                            R.drawable.doremon48,
+                            R.mipmap.ic_report_problem,
                             getResources().getString(R.string.title_have_space),
                             getResources().getString(R.string.massage_have_space));
                     myAlert.myDialog();
 
                 } else if (aBoolean) {
                     // non record audio
-                    MyAlert myAlert = new MyAlert(AddBusStop.this, R.drawable.kon48,
+                    MyAlert myAlert = new MyAlert(AddBusStop.this, R.mipmap.ic_report_problem,
                             getResources().getString(R.string.title_record_sound),
                             getResources().getString(R.string.massage_record_sound));
                     myAlert.myDialog();
                 } else if (locationABoolean) {
                     // non marker
-                    MyAlert myAlert = new MyAlert(AddBusStop.this, R.drawable.bird48,
+                    MyAlert myAlert = new MyAlert(AddBusStop.this, R.mipmap.ic_report_problem,
                             getResources().getString(R.string.title_mark),
                             getResources().getString(R.string.massage_mark));
                     myAlert.myDialog();

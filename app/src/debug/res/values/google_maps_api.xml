@@ -15,11 +15,11 @@
     Once you have your key (it starts with "AIza"), replace the "google_maps_key"
     string in this file.
 
-    ดาว ==> AIzaSyD4NLJF_6D6H3SSXY_usNvRWZ_TQrtlXhs
+    ดาว ==> AIzaSyAOrA7UcsZUWGgShrxCjWlhUlpXGOUfJ6Q
     toei ==> AIzaSyAz1V7cXFv1l1ppb6mXVlWXc22BBAfHjHM
 
     -->
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
-       AIzaSyAz1V7cXFv1l1ppb6mXVlWXc22BBAfHjHM
+       AIzaSyAOrA7UcsZUWGgShrxCjWlhUlpXGOUfJ6Q
     </string>
 </resources>
