@@ -3,6 +3,10 @@ package rsu.siriwimon.pakdeeporn.alertbusstop;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +23,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -31,8 +36,10 @@ public class AddBusStop extends FragmentActivity implements OnMapReadyCallback {
     private ImageView recodImageView, playimImageView, backImageView;
     private boolean aBoolean = true; // nonrecord sound
     private Uri uri;
+
     private double laStartADouble = 13.964987;
     private double lngStartADouble = 100.585154;
+
     private double laBusStopADouble, lngBusStopADouble;
     private boolean locationABoolean = true;
     private CheckBox checkBox;
@@ -41,6 +48,9 @@ public class AddBusStop extends FragmentActivity implements OnMapReadyCallback {
     private String idString;
     private String tag = "12AprilV2";
 
+    private LocationManager locationManager;
+    private Criteria criteria;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +58,9 @@ public class AddBusStop extends FragmentActivity implements OnMapReadyCallback {
 
         // Bind Widget
         bindWidget();
+
+        //Setup Location
+        setupLocation();
 
         //From EditBusStop
         fromEditBusStop();
@@ -68,6 +81,77 @@ public class AddBusStop extends FragmentActivity implements OnMapReadyCallback {
         createFragmentMap();
 
     } // Main Method
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //for Network
+        Location networkLocation = myFindLocation(LocationManager.NETWORK_PROVIDER);
+        if (networkLocation != null) {
+            laStartADouble = networkLocation.getLatitude();
+            lngStartADouble = networkLocation.getLongitude();
+        }
+
+        //for GPS
+        Location gpsLocation = myFindLocation(LocationManager.GPS_PROVIDER);
+        if (gpsLocation != null) {
+            laStartADouble = gpsLocation.getLatitude();
+            lngStartADouble = gpsLocation.getLongitude();
+        }
+
+        Log.d("8MayV1", "current Lat ==> " + laStartADouble);
+        Log.d("8MayV1", "current Lng ==> " + lngStartADouble);
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        locationManager.removeUpdates(locationListener);
+    }
+
+    public Location myFindLocation(String strProvider) {
+
+        Location location = null;
+        if (locationManager.isProviderEnabled(strProvider)) {
+            locationManager.requestLocationUpdates(strProvider, 1000, 10, locationListener);
+            location = locationManager.getLastKnownLocation(strProvider);
+        }
+
+        return location;
+    }
+
+    public LocationListener locationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+            laStartADouble = location.getLatitude();
+            lngStartADouble = location.getLongitude();
+        }
+
+        @Override
+        public void onStatusChanged(String s, int i, Bundle bundle) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String s) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String s) {
+
+        }
+    };
+
+    private void setupLocation() {
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        criteria = new Criteria();
+        criteria.setAccuracy(Criteria.ACCURACY_FINE);
+        criteria.setAltitudeRequired(false);
+        criteria.setBearingRequired(false);
+    }
 
     private void createFragmentMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -256,6 +340,8 @@ public class AddBusStop extends FragmentActivity implements OnMapReadyCallback {
         LatLng centerLatLng = new LatLng(laStartADouble, lngStartADouble);
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(centerLatLng, 16)); // 16 คือตำแหน่งซูม มุมมอง
 
+        //Create userLocation Marker
+        createUserMarker();
 
         // get event from clack map
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
@@ -265,6 +351,7 @@ public class AddBusStop extends FragmentActivity implements OnMapReadyCallback {
                 locationABoolean = false;
 
                 mMap.clear(); //ลบมากเกอร์ต่างๆ
+                createUserMarker();
                 mMap.addMarker(new MarkerOptions()
                         .position(latLng));
 
@@ -277,4 +364,13 @@ public class AddBusStop extends FragmentActivity implements OnMapReadyCallback {
             } // on map click
         });
     } // onMapReady
+
+    private void createUserMarker() {
+
+        MarkerOptions markerOptions = new MarkerOptions()
+                .position(new LatLng(laStartADouble, lngStartADouble))
+                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_current_location));
+        mMap.addMarker(markerOptions);
+
+    }
 } // Main Class
