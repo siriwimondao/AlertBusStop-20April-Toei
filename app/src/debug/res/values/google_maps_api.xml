@@ -17,9 +17,10 @@
 
     ดาว ==> AIzaSyAOrA7UcsZUWGgShrxCjWlhUlpXGOUfJ6Q
     toei ==> AIzaSyAz1V7cXFv1l1ppb6mXVlWXc22BBAfHjHM
+    มาสเตอร์ ==> AIzaSyBnR3zRfqxfZgWzZ5nQR3UdrHTthaK3wb8
 
     -->
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
-       AIzaSyAOrA7UcsZUWGgShrxCjWlhUlpXGOUfJ6Q
+       AIzaSyBnR3zRfqxfZgWzZ5nQR3UdrHTthaK3wb8
     </string>
 </resources>
