@@ -34,11 +34,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private MyManage myManage;
     private LocationManager locationManager;
     private Criteria criteria;
-    private Double userLatADouble = 13.964987, userLngADouble = 100.585154, aDouble = 0.0;
+    private Double userLatADouble = 13.964987, userLngADouble = 100.585154 , aDouble = 0.0;
     private boolean aBoolean = true, notificationABoolean = true;
     private ImageView editImageView, deleteImageView;
     private int anInt; // ค่า index ของระยะ ที่ใช้ 0==> 20, 1==>300
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("31octV1", "You Click Long"); //ควบคุมการคลิก
+                Log.d("31octV1", "You Click "); //ควบคุมการคลิก
 
                 startActivity(new Intent(MainActivity.this, AddBusStop.class));//เคลื่อนย้ายการทำงาน
 
@@ -306,6 +305,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onLocationChanged(Location location) {
             userLatADouble = location.getLatitude();
             userLngADouble = location.getLongitude();
+           // Log.d("Debug","Lat" + location.getLatitude() + "Long" + location.getLongitude());
         }
 
         @Override
@@ -395,7 +395,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         builder.setCancelable(false);
                         builder.setIcon(R.mipmap.ic_notification2);
                         builder.setTitle("โปรดยืนยัน");
-                        builder.setMessage("คุณต้องการเปลียนปลายทางไปที่ " + nameStrings[i]);
+                        builder.setMessage("คุณต้องการเปลี่ยนปลายทางไปที่ " + nameStrings[i]);
                         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
