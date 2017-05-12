@@ -37,7 +37,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Double userLatADouble = 13.964987, userLngADouble = 100.585154 , aDouble = 0.0;
     private boolean aBoolean = true, notificationABoolean = true;
     private ImageView editImageView, deleteImageView;
-    private int anInt; // ค่า index ของระยะ ที่ใช้ 0==> 20, 1==>300
+    private int anInt; // ค่า index ของระยะ ที่ใช้ 0==> 50, 1==>500
+    private int des = 0 ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,7 +109,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         boolean status = false;
         if (anInt == 1) {
             status = true;
-        }
+            }
+
+
+
+
 
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
@@ -133,14 +138,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         "/" +
                         R.raw.bells);
             } else {
-                uri = Uri.parse("android.resource://" +
-                        MainActivity.this.getPackageName() +
+               uri = Uri.parse("android.resource://" +
+                      MainActivity.this.getPackageName() +
                         "/" +
-                        R.raw.past_des);
+                        R.raw.empty);
             }
 
-        } else {
-            // BusStop
+            } else {
+            //BusStop
             uri = Uri.parse("file:" + strSound);
         }
 
@@ -152,11 +157,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             notification.flags |= Notification.DEFAULT_LIGHTS
                     | Notification.FLAG_AUTO_CANCEL
                     | Notification.FLAG_ONLY_ALERT_ONCE;
-        } else {
+       } else {
 
             notification.flags |= Notification.FLAG_AUTO_CANCEL;
         }
-
 
 
 
@@ -218,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         try {
 
-            double[] seriousDistance = new double[]{20.0, 300.0};
+            double[] seriousDistance = new double[]{50.0, 500.0};
 
             SQLiteDatabase sqLiteDatabase = openOrCreateDatabase(MyOpenHelper.database_name,
                     MODE_PRIVATE, null);
@@ -229,6 +233,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             double[] destinationLngDoubles = new double[intCursor];
             double[] distanceDoubles = new double[intCursor];
             int[] indexDistance = new int[intCursor];
+            int[] status = new int[intCursor];
+
 
             for (int i = 0; i < intCursor; i++) {
 
@@ -260,6 +266,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         myNotification(cursor.getString(2));
                         notificationABoolean = false;
 
+                        
+                       //if (anInt == 1){
+
+                        // myNotification(cursor.getString(2));
+                          // notificationABoolean = false;
+
+                       // }
+
                     }
 
 
@@ -274,6 +288,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 cursor.moveToNext();
             }   //for
+
 
 
             cursor.close();
@@ -305,7 +320,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onLocationChanged(Location location) {
             userLatADouble = location.getLatitude();
             userLngADouble = location.getLongitude();
-           // Log.d("Debug","Lat" + location.getLatitude() + "Long" + location.getLongitude());
+
         }
 
         @Override
@@ -445,6 +460,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void mySoundEfect(int intSound) {
         MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), intSound);
         mediaPlayer.start(); //ทำการร้อง
+        if(anInt == 1){
+            mediaPlayer.attachAuxEffect(des);
+            mediaPlayer.stop();
+        }
 
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
@@ -452,7 +471,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mediaPlayer.release(); // คืนหน่วยความจำ
             }
         });
-    } // mySoundEfect
+    } // mySoundEffect
 
     @Override
     public void onClick(View view) {
