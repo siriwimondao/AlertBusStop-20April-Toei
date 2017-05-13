@@ -255,6 +255,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //Check Distance
                 if ((distanceDoubles[i] <= seriousDistance[indexDistance[i]])) {    // เมื่ออยู่ในวง
                     Log.d("27febV4", "Notification Work");
+                    Log.d("14MayV1", "อยู่ในวง 500");
+                    Log.d("14MayV1", "ระยะ ห่าง Desination ==> " + distanceDoubles[i]);
+
 
 
                     // ดูว่าเป็นการเข้าครั้งแรกปะ
@@ -265,6 +268,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         anInt = indexDistance[i];
                         myNotification(cursor.getString(2));
                         notificationABoolean = false;
+
+                    }
+
+                    //เช้คระยะ 50 เมตร
+                    if (distanceDoubles[i] <= 50) {
+                        notificationABoolean = true;
+
+                        if (notificationABoolean) {
+                            myNotification("3");
+                            notificationABoolean = false;
+                        }
 
                     }
 
