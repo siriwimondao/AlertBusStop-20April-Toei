@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LocationManager locationManager;
     private Criteria criteria;
     private Double userLatADouble = 13.964987, userLngADouble = 100.585154 , aDouble = 0.0;
-    private boolean aBoolean = true, notificationABoolean = true;
+    private boolean aBoolean = true, notificationABoolean = true, check50 = true;
     private ImageView editImageView, deleteImageView;
     private int anInt; // ค่า index ของระยะ ที่ใช้ 0==> 50, 1==>500
     private int des = 0 ;
@@ -271,16 +271,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     }
 
-                    //เช้คระยะ 50 เมตร
                     if (distanceDoubles[i] <= 50) {
-                        notificationABoolean = true;
 
-                        if (notificationABoolean) {
-                            myNotification("3");
-                            notificationABoolean = false;
-                        }
+                        myNotification(cursor.getString(2));
+
 
                     }
+
+                        //เช้คระยะ 50 เมตร
+                        if (check50) {
+
+                        }
+
 
 
 
