@@ -137,11 +137,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         MainActivity.this.getPackageName() +
                         "/" +
                         R.raw.bells);
-            } else {
+            } else{
                uri = Uri.parse("android.resource://" +
                       MainActivity.this.getPackageName() +
                         "/" +
-                        R.raw.empty);
+                        R.raw.bells);
             }
 
             } else {
@@ -266,15 +266,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         myNotification(cursor.getString(2));
                         notificationABoolean = false;
 
-                        
-                       //if (anInt == 1){
-
-                        // myNotification(cursor.getString(2));
-                          // notificationABoolean = false;
-
-                       // }
-
                     }
+
+
 
 
                 } else if (distanceDoubles[i] <= (aDouble)) {
@@ -297,6 +291,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }   // calculate
+   // private  void calDistance(){
+
+      ///  try{
+        //    double[] distance1 = new double[]{50};
+         //   SQLiteDatabase sqLiteDatabase = openOrCreateDatabase(MyOpenHelper.database_name
+         //           ,MODE_PRIVATE,null);
+          //      Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM busTABLE",
+           ///             null);
+          //  cursor.moveToFirst();
+          //  int intCursor = cursor.getCount();
+          ///  double[] destinationLatDoule = new double[intCursor];
+          //  double[] destinationLngDoule = new double[intCursor];
+           // double[] distanceDoule = new  double[intCursor];
+           // int[] status1 = new int[intCursor];
+           // for (int i = 0; i< intCursor; i++){
+             //   destinationLatDoule[i] = Double.parseDouble(cursor.getString(3));
+            //    destinationLngDoule[i] = Double.parseDouble(cursor.getString(4));
+             //   distanceDoule[i] = distance(userLatADouble,userLngADouble,
+              //          destinationLatDoule[i],destinationLngDoule[i]);
+              //  status1[i]= Integer.parseInt(cursor.getString(5));
+              //  if ((destinationLatDoule[i]<= distance1[status1[i]])){
+                //    if (notificationABoolean){
+                 //       aDouble = distance1[status1[i]]+10;
+                 //       anInt = status1[intCursor];
+                   //     myNotification(cursor.getString(2));
+                    //    notificationABoolean = false;
+                  //  }
+                  //  notificationABoolean = true ;
+
+               // }
+              //  cursor.moveToNext();
+           // }
+          //  cursor.close();
+       // } catch (Exception e ){
+          //  e.printStackTrace();
+       // }
+    //}
 
     @Override
     protected void onStop() {
