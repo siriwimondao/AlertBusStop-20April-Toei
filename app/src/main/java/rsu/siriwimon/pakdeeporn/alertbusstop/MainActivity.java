@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private boolean aBoolean = true, notificationABoolean = true, check50 = true;
     private ImageView editImageView, deleteImageView;
     private int anInt; // ค่า index ของระยะ ที่ใช้ 0==> 50, 1==>500
-    private int des = 0 ;
+   
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                uri = Uri.parse("android.resource://" +
                       MainActivity.this.getPackageName() +
                         "/" +
-                        R.raw.bells);
+                        R.raw.past_des);
             }
 
             } else {
@@ -291,7 +291,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if (!notificationABoolean) {
                         myNotification(cursor.getString(2));
                     }
-                    notificationABoolean = true;
+
 
                 }
 
@@ -307,43 +307,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }   // calculate
-   // private  void calDistance(){
 
-      ///  try{
-        //    double[] distance1 = new double[]{50};
-         //   SQLiteDatabase sqLiteDatabase = openOrCreateDatabase(MyOpenHelper.database_name
-         //           ,MODE_PRIVATE,null);
-          //      Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM busTABLE",
-           ///             null);
-          //  cursor.moveToFirst();
-          //  int intCursor = cursor.getCount();
-          ///  double[] destinationLatDoule = new double[intCursor];
-          //  double[] destinationLngDoule = new double[intCursor];
-           // double[] distanceDoule = new  double[intCursor];
-           // int[] status1 = new int[intCursor];
-           // for (int i = 0; i< intCursor; i++){
-             //   destinationLatDoule[i] = Double.parseDouble(cursor.getString(3));
-            //    destinationLngDoule[i] = Double.parseDouble(cursor.getString(4));
-             //   distanceDoule[i] = distance(userLatADouble,userLngADouble,
-              //          destinationLatDoule[i],destinationLngDoule[i]);
-              //  status1[i]= Integer.parseInt(cursor.getString(5));
-              //  if ((destinationLatDoule[i]<= distance1[status1[i]])){
-                //    if (notificationABoolean){
-                 //       aDouble = distance1[status1[i]]+10;
-                 //       anInt = status1[intCursor];
-                   //     myNotification(cursor.getString(2));
-                    //    notificationABoolean = false;
-                  //  }
-                  //  notificationABoolean = true ;
-
-               // }
-              //  cursor.moveToNext();
-           // }
-          //  cursor.close();
-       // } catch (Exception e ){
-          //  e.printStackTrace();
-       // }
-    //}
 
     @Override
     protected void onStop() {
@@ -507,10 +471,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void mySoundEfect(int intSound) {
         MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), intSound);
         mediaPlayer.start(); //ทำการร้อง
-        if(anInt == 1){
-            mediaPlayer.attachAuxEffect(des);
-            mediaPlayer.stop();
-        }
 
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
