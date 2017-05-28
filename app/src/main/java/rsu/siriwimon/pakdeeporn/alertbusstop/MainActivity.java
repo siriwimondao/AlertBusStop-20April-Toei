@@ -36,7 +36,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LocationManager locationManager;
     private Criteria criteria;
     private Double userLatADouble = 13.964987, userLngADouble = 100.585154 , aDouble = 0.0;
-    private boolean aBoolean = true, notificationABoolean = true, check50Notification = true;
+    private boolean aBoolean = true, notificationABoolean = true,
+            check50Notification = true, destinationABoolean = true;
     private ImageView editImageView, deleteImageView;
     private int anInt; // ค่า index ของระยะ ที่ใช้ 0==> 50, 1==>500
    
@@ -107,10 +108,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void myNotification(String strSound, boolean bolNotification) {
 
         Log.d("28MayV2", "aInt ==> " + anInt);  // 0 ==> ระยะ 50, 1 ==> 500 m
+        Log.d("28MayV2", "bolNotification ==> " + bolNotification);
+        Log.d("28MayV2", "destinationAboolene ==> " + destinationABoolean);
         boolean status = false;
         if (anInt == 1) {
             status = true;
-            }
+        }
 
 
 
@@ -130,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (status) {
             // Destination
 
-            if (bolNotification) {
+            if (bolNotification && destinationABoolean) {
                 uri = Uri.parse("android.resource://" +
                         MainActivity.this.getPackageName() +
                         "/" +
@@ -273,6 +276,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         anInt = 0;
                         myNotification(cursor.getString(2), check50Notification);
                         check50Notification = false;
+                        anInt = indexDistance[i];
                         Toast.makeText(getApplicationContext(),"50-1",Toast.LENGTH_SHORT).show();
 
                     }
@@ -361,7 +365,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 } else if (distanceDoubles[i] <= (aDouble)) {
                     if (!notificationABoolean) {
-                        myNotification(cursor.getString(2), notificationABoolean);
+
+                        if (anInt == 1) {
+                            destinationABoolean = false;
+                        }
+
+                        myNotification(cursor.getString(2), true);
+
+
+
                         Toast.makeText(getApplicationContext(),"50-2",Toast.LENGTH_SHORT).show();
                     }
 
