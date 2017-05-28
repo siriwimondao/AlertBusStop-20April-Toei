@@ -23,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.Random;
 
@@ -113,9 +114,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-
-
-
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         builder.setSmallIcon(R.mipmap.ic_alert);
         builder.setTicker("Help Me Please Arrive ");
@@ -137,11 +135,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         MainActivity.this.getPackageName() +
                         "/" +
                         R.raw.bells);
+                Toast.makeText(getApplicationContext(),"500-1",Toast.LENGTH_SHORT).show();
             } else{
                uri = Uri.parse("android.resource://" +
                       MainActivity.this.getPackageName() +
                         "/" +
                         R.raw.past_des);
+                Toast.makeText(getApplicationContext(),"500-2",Toast.LENGTH_SHORT).show();
             }
 
             } else {
@@ -268,31 +268,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         anInt = indexDistance[i];
                         myNotification(cursor.getString(2));
                         notificationABoolean = false;
+                        Toast.makeText(getApplicationContext(),"50-1",Toast.LENGTH_SHORT).show();
 
                     }
 
-                    if (distanceDoubles[i] <= 50) {
+                   // if (distanceDoubles[i] <= 50) {
+                    //  myNotification(cursor.getString(2));
 
-                        myNotification(cursor.getString(2));
 
-
-                    }
+                    //}
 
                         //เช้คระยะ 50 เมตร
-                        if (check50) {
+                      //  if (check50) {
 
-                        }
-
-
+                       // }
 
 
 
                 } else if (distanceDoubles[i] <= (aDouble)) {
                     if (!notificationABoolean) {
                         myNotification(cursor.getString(2));
+                        Toast.makeText(getApplicationContext(),"50-2",Toast.LENGTH_SHORT).show();
                     }
 
-
+                    notificationABoolean = true;
                 }
 
 
