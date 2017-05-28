@@ -104,9 +104,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         criteria.setBearingRequired(false);
     }
 
-    private void myNotification(String strSound) {
+    private void myNotification(String strSound, boolean bolNotification) {
 
-        Log.d("11AprilV1", "aInt ==> " + anInt);
+        Log.d("28MayV2", "aInt ==> " + anInt);  // 0 ==> ระยะ 50, 1 ==> 500 m
         boolean status = false;
         if (anInt == 1) {
             status = true;
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (status) {
             // Destination
 
-            if (notificationABoolean) {
+            if (bolNotification) {
                 uri = Uri.parse("android.resource://" +
                         MainActivity.this.getPackageName() +
                         "/" +
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             } else {
-            //BusStop
+            //BusStop, or 50m Destination
             uri = Uri.parse("file:" + strSound);
         }
 
@@ -269,8 +269,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if (check50Notification) {
                         aDouble = seriousDistance[indexDistance[i]] + 10;
 
-                        anInt = indexDistance[i];
-                        myNotification(cursor.getString(2));
+//                        anInt = indexDistance[i];
+                        anInt = 0;
+                        myNotification(cursor.getString(2), check50Notification);
                         check50Notification = false;
                         Toast.makeText(getApplicationContext(),"50-1",Toast.LENGTH_SHORT).show();
 
@@ -278,7 +279,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 } else if (distanceDoubles[i] <= (aDouble)) {
                     if (!check50Notification) {
-                        myNotification(cursor.getString(2));
+                        myNotification(cursor.getString(2), check50Notification);
                         Toast.makeText(getApplicationContext(),"50-2",Toast.LENGTH_SHORT).show();
                     }
 
@@ -352,7 +353,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         aDouble = seriousDistance[indexDistance[i]] + 10;
 
                         anInt = indexDistance[i];
-                        myNotification(cursor.getString(2));
+                        myNotification(cursor.getString(2), notificationABoolean);
                         notificationABoolean = false;
                         Toast.makeText(getApplicationContext(),"50-1",Toast.LENGTH_SHORT).show();
 
@@ -360,7 +361,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 } else if (distanceDoubles[i] <= (aDouble)) {
                     if (!notificationABoolean) {
-                        myNotification(cursor.getString(2));
+                        myNotification(cursor.getString(2), notificationABoolean);
                         Toast.makeText(getApplicationContext(),"50-2",Toast.LENGTH_SHORT).show();
                     }
 
