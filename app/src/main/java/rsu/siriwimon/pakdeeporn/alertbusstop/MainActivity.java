@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LocationManager locationManager;
     private Criteria criteria;
     private Double userLatADouble = 13.964987, userLngADouble = 100.585154 , aDouble = 0.0;
-    private boolean aBoolean = true, notificationABoolean = true, check50 = true;
+    private boolean aBoolean = true, notificationABoolean = true, check50Notification = true;
     private ImageView editImageView, deleteImageView;
     private int anInt; // ค่า index ของระยะ ที่ใช้ 0==> 50, 1==>500
    
@@ -203,6 +203,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         calculateAllDistance();
 
+        calculateForFifty();
+
 
         //Post
         if (aBoolean) {
@@ -217,6 +219,87 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     }   // myLoop
+
+    private void calculateForFifty() {
+
+        try {
+
+
+            double[] seriousDistance = new double[]{50.0, 50.0};
+
+            SQLiteDatabase sqLiteDatabase = openOrCreateDatabase(MyOpenHelper.database_name,
+                    MODE_PRIVATE, null);
+            Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM busTABLE WHERE Destination = '1'", null);
+            cursor.moveToFirst();
+            int intCursor = cursor.getCount();
+            double[] destinationLatDoubles = new double[intCursor];
+            double[] destinationLngDoubles = new double[intCursor];
+            double[] distanceDoubles = new double[intCursor];
+            int[] indexDistance = new int[intCursor];
+            int[] status = new int[intCursor];
+
+
+            for (int i = 0; i < intCursor; i++) {
+
+                destinationLatDoubles[i] = Double.parseDouble(cursor.getString(3));
+                destinationLngDoubles[i] = Double.parseDouble(cursor.getString(4));
+                distanceDoubles[i] = distance(userLatADouble, userLngADouble,
+                        destinationLatDoubles[i], destinationLngDoubles[i]);
+                indexDistance[i] = Integer.parseInt(cursor.getString(5));
+
+
+
+
+                Log.d("28MayV1", "ระยะห่างจากจุดที่ Destination 50m (" + i + ") ==> " + distanceDoubles[i]);
+                Log.d("28MayV1", "boolean check50Notification ==> " + check50Notification);
+
+
+
+                //Check Distance
+                if ((distanceDoubles[i] <= seriousDistance[indexDistance[i]])) {    // เมื่ออยู่ในวง
+                    Log.d("28MayV1", "Notification Work");
+
+                    Log.d("14MayV1", "อยู่ในวง 500");
+                    Log.d("14MayV1", "ระยะ ห่าง Desination ==> " + distanceDoubles[i]);
+
+
+
+                    // ดูว่าเป็นการเข้าครั้งแรกปะ
+                    //ค่า aDouble ค่าของ seriousDistance เพิ่มไป 10 เมตร
+                    if (check50Notification) {
+                        aDouble = seriousDistance[indexDistance[i]] + 10;
+
+                        anInt = indexDistance[i];
+                        myNotification(cursor.getString(2));
+                        check50Notification = false;
+                        Toast.makeText(getApplicationContext(),"50-1",Toast.LENGTH_SHORT).show();
+
+                    }
+
+                } else if (distanceDoubles[i] <= (aDouble)) {
+                    if (!check50Notification) {
+                        myNotification(cursor.getString(2));
+                        Toast.makeText(getApplicationContext(),"50-2",Toast.LENGTH_SHORT).show();
+                    }
+
+                    check50Notification = true;
+                }
+
+
+                cursor.moveToNext();
+            }   //for
+
+
+
+            cursor.close();
+
+
+        } catch (Exception e) {
+            Log.d("28MayV1", "e calculateFifty ==> " + e.toString());
+        }
+
+
+    }   // calculateForFifty
 
     private void calculateAllDistance() {
 
@@ -245,11 +328,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 indexDistance[i] = Integer.parseInt(cursor.getString(5));
 
                 Log.d("27febV4", "ระยะห่างจากจุดที่ (" + i + ") ==> " + distanceDoubles[i]);
+
                 Log.d("11AprilV1", "ระยะห่างจากจุดที่ (" + i + ") ==> " + distanceDoubles[i]);
+                Log.d("11AprilV1", "boolean Notification ==> " + notificationABoolean);
+
                 Log.d("27febV4", "index ==> " + indexDistance[i]);
                 Log.d("27febV4", "ระยะคำนวน ==> " + seriousDistance[indexDistance[i]]);
                 Log.d("27febV4", "boolean Notification ==> " + notificationABoolean);
-                Log.d("11AprilV1", "boolean Notification ==> " + notificationABoolean);
+
                 Log.d("27febV4", "aDouble ==> " + aDouble);
 
                 //Check Distance
@@ -272,19 +358,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     }
 
-                   // if (distanceDoubles[i] <= 50) {
-                    //  myNotification(cursor.getString(2));
-
-
-                    //}
-
-                        //เช้คระยะ 50 เมตร
-                      //  if (check50) {
-
-                       // }
-
-
-
                 } else if (distanceDoubles[i] <= (aDouble)) {
                     if (!notificationABoolean) {
                         myNotification(cursor.getString(2));
@@ -305,7 +378,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             e.printStackTrace();
         }
 
-    }   // calculate
+    }   // calculateAllDistance
 
 
     @Override
